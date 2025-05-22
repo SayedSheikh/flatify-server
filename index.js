@@ -64,6 +64,19 @@ async function run() {
       res.send(result);
     });
 
+    app.put("/flatify/:id", async (req, res) => {
+      const query = {
+        _id: new ObjectId(req.params.id),
+      };
+
+      const updatedValue = {
+        $set: req.body,
+      };
+
+      const result = await roommateCollection.updateOne(query, updatedValue);
+      res.send(result);
+    });
+
     app.delete("/flatify/:id", async (req, res) => {
       const query = {
         _id: new ObjectId(req.params.id),
