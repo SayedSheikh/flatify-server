@@ -77,6 +77,21 @@ async function run() {
       res.send(result);
     });
 
+    app.patch("/flatify/like/:id", async (req, res) => {
+      const query = {
+        _id: new ObjectId(req.params.id),
+      };
+
+      const updatedValue = {
+        $inc: {
+          liked: +1,
+        },
+      };
+
+      const result = await roommateCollection.updateOne(query, updatedValue);
+      res.send(result);
+    });
+
     app.delete("/flatify/:id", async (req, res) => {
       const query = {
         _id: new ObjectId(req.params.id),
