@@ -47,7 +47,7 @@ async function run() {
           _id: new ObjectId(id),
         };
         const result = await roommateCollection.findOne(query);
-        console.log(result);
+
         res.send(result);
       } else {
         return res.json({
@@ -61,6 +61,15 @@ async function run() {
         email: email,
       };
       const result = await roommateCollection.find(query).toArray();
+      res.send(result);
+    });
+
+    app.delete("/flatify/:id", async (req, res) => {
+      const query = {
+        _id: new ObjectId(req.params.id),
+      };
+
+      const result = await roommateCollection.deleteOne(query);
       res.send(result);
     });
     await client.db("admin").command({ ping: 1 });
