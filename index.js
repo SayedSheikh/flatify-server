@@ -40,11 +40,20 @@ async function run() {
 
     app.get("/flatify/:id", async (req, res) => {
       const id = req.params.id;
-      const query = {
-        _id: new ObjectId(id),
-      };
-      const result = await roommateCollection.findOne(query);
-      res.send(result);
+
+      const isValidObjectId = (id) => /^[a-fA-F0-9]{24}$/.test(id);
+      if (isValidObjectId(id)) {
+        const query = {
+          _id: new ObjectId(id),
+        };
+        const result = await roommateCollection.findOne(query);
+        console.log(result);
+        res.send(result);
+      } else {
+        return res.json({
+          message: "Invalid ID format",
+        });
+      }
     });
     app.get("/flatify/mylisting/:email", async (req, res) => {
       const email = req.params.email;
