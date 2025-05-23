@@ -55,6 +55,15 @@ async function run() {
         });
       }
     });
+
+    app.get("/featured", async (req, res) => {
+      const query = {
+        availability: true,
+      };
+
+      const result = await roommateCollection.find(query).limit(6).toArray();
+      res.send(result);
+    });
     app.get("/flatify/mylisting/:email", async (req, res) => {
       const email = req.params.email;
       const query = {
@@ -77,7 +86,7 @@ async function run() {
       res.send(result);
     });
 
-    app.patch("/flatify/like/:id", async (req, res) => {
+    app.put("/flatify/like/:id", async (req, res) => {
       const query = {
         _id: new ObjectId(req.params.id),
       };
