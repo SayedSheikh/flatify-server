@@ -22,11 +22,13 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    // await client.connect();
+
     // Send a ping to confirm a successful connection
     const roommateCollection = client
       .db("roomDB")
       .collection("roommateCollection");
+
+    const reviewCollection = client.db("roomDB").collection("reviewCollection");
 
     app.get("/flatify", async (req, res) => {
       const result = await roommateCollection.find().toArray();
@@ -107,6 +109,14 @@ async function run() {
       };
 
       const result = await roommateCollection.deleteOne(query);
+      res.send(result);
+    });
+
+    // review api
+
+    app.post("/reviews", async (req, res) => {
+      const result = await reviewCollection.insertOne(req.body);
+
       res.send(result);
     });
     await client.db("admin").command({ ping: 1 });
