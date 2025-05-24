@@ -42,7 +42,3 @@ It is built using **Express.js** and **MongoDB** and deployed on **Vercel**.
 - **Backend**: Node.js, Express.js
 - **Database**: MongoDB Atlas
 - **Deployment**: Vercel
-
----
-
-## 📁 Project Structure
