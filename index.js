@@ -29,6 +29,7 @@ async function run() {
       .collection("roommateCollection");
 
     const reviewCollection = client.db("roomDB").collection("reviewCollection");
+    const bannerCollection = client.db("roomDB").collection("bannerCollection");
 
     app.get("/flatify", async (req, res) => {
       const result = await roommateCollection.find().toArray();
@@ -125,10 +126,21 @@ async function run() {
 
       res.send(result);
     });
-    await client.db("admin").command({ ping: 1 });
-    console.log(
-      "Pinged your deployment. You successfully connected to MongoDB!"
-    );
+    // await client.db("admin").command({ ping: 1 });
+    // console.log(
+    //   "Pinged your deployment. You successfully connected to MongoDB!"
+    // );
+
+    // banner api
+
+    app.get("/banner", async (req, res) => {
+      const result = await bannerCollection.find().toArray();
+      res.send(result);
+    });
+    app.post("/banner", async (req, res) => {
+      const result = await bannerCollection.insertOne(req.body);
+      res.send(result);
+    });
   } finally {
     // Ensures that the client will close when you finish/error
     // await client.close();
